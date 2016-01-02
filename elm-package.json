@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "explain floating-point binary, reactivelly",
-    "repository": "https://github.com/user/project.git",
+    "summary": "explain floating-point binary, reactively",
+    "repository": "https://github.com/huiwang/explained-reactively.git",
     "license": "MIT License",
     "source-directories": [
         "."
