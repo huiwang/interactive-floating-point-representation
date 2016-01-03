@@ -35,20 +35,38 @@ view2 address model =
   let
     bitViews = map (viewCounter address) model
   in
-    table []
+    table [style borderStyle]
       [ tbody []
         [ tr []
-          [ th [] [text "sign (31)"]
-          , th [] [text "exponent (30 - 23)"]
-          , th [] [text "fraction (22 - 0)"]
+          [ th [style borderStyle] [text "sign (31)"]
+          , th [style borderStyle] [text "exponent (30 - 23)"]
+          , th [style borderStyle] [text "fraction (22 - 0)"]
+          , th [style borderStyle] [text "decimal"]
           ]
         , tr []
-          [ td [] (rangeBetween 0 1 bitViews)
-          , td [] (rangeBetween 1 9 bitViews)
-          , td [] (rangeBetween 9 32 bitViews)
+          [ td [style borderStyle] (signPart bitViews)
+          , td [style borderStyle] (exponentPart bitViews)
+          , td [style borderStyle] (fractionPart bitViews)
+          , td [style borderStyle] [(text "value")]
           ]
         ]
       ]
+
+signPart : List a -> List a
+signPart list =
+  rangeBetween 0 1 list
+
+exponentPart : List a -> List a
+exponentPart list =
+  rangeBetween 1 9 list
+
+fractionPart : List a -> List a
+fractionPart list =
+  rangeBetween 9 32 list
+
+borderStyle : List(String, String)
+borderStyle =
+  [("border", "1px solid black")]
 
 rangeBetween : Int -> Int -> List a -> List a
 rangeBetween from to list =
