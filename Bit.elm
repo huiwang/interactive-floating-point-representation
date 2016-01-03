@@ -1,4 +1,4 @@
-module Bit (initialModel, update, view) where
+module Bit (Model, Action, initModel, update, view) where
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (on, targetChecked)
@@ -7,8 +7,8 @@ import Signal exposing (Address)
 -- MODEL
 type alias Model = Bool
 
-initialModel : Model
-initialModel = False
+initModel : Model
+initModel = False
 
 
 -- UPDATE
