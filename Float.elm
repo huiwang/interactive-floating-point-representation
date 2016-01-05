@@ -34,6 +34,10 @@ view2 : Signal.Address Action -> Model -> Html
 view2 address model =
   let
     bitViews = map (viewCounter address) model
+    sign = extractSign model
+    exponent = extractExponent model
+    fraction = extractFraction model
+    decimalVal = sign * (1 + fraction) * 2^(exponent-127)
   in
     table [style borderStyle]
       [ tbody []
@@ -47,10 +51,38 @@ view2 address model =
           [ td [style borderStyle] (signPart bitViews)
           , td [style borderStyle] (exponentPart bitViews)
           , td [style borderStyle] (fractionPart bitViews)
-          , td [style borderStyle] [(text "value")]
+          , td [style borderStyle] [text "sign * (1 + fraction) * 2^(exponent-127)"]
+          ]
+        , tr []
+          [ td [style borderStyle] [toString sign |> text]
+          , td [style borderStyle] [toString exponent |> text]
+          , td [style borderStyle] [toString fraction |> text]
+          , td [style borderStyle] [toString decimalVal |> text]
           ]
         ]
       ]
+
+extractExponent : Model -> Float
+extractExponent model =
+  sumWithRef (exponentPart model) 23
+
+extractFraction : Model -> Float
+extractFraction model =
+  sumWithRef (fractionPart model) 24
+
+
+sumWithRef : Model -> Int -> Float
+sumWithRef model ref =
+  map (\(i, checked) -> (toFloat i, checked)) model
+  |> foldr (\ (i, checked) b -> (if(checked) then 2^(i - toFloat ref) else 0) + b) 0
+
+extractSign : Model -> Float
+extractSign model =
+  let
+    isNegative = signPart model
+      |> all (\(i, checked) -> checked)
+  in
+    if(isNegative) then -1 else 1
 
 signPart : List a -> List a
 signPart list =
