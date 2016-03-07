@@ -1,4 +1,4 @@
-module Float(initModel, update, view, view2, rangeBetween) where
+module Float(initModel, update, view, rangeBetween) where
 
 import List exposing(..)
 import Signal
@@ -28,10 +28,6 @@ update action bits =
 -- View
 view : Signal.Address Action -> Model -> Html
 view address model =
-  div [] (List.map (viewCounter address) model)
-
-view2 : Signal.Address Action -> Model -> Html
-view2 address model =
   let
     bitViews = map (viewCounter address) model
     sign = extractSign model
