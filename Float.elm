@@ -64,7 +64,7 @@ extractExponent model =
 
 extractFraction : Model -> Float
 extractFraction model =
-  sumWithRef (fractionPart model) 24
+  sumWithRef (fractionPart model) 23
 
 
 sumWithRef : Model -> Int -> Float
